@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Admin Manage Places - Discovering Egypt</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <style>
+        /* --- 1. Root Variables & Reset --- */
+        :root {
+            /* Palette */
+            --primary: #0e7490;
+            --primary-dark: #0c4a5c;
+            --primary-light: #22d3ee;
+            --accent: #d97706;
+            
+            /* Gradients */
+            --grad-gold: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            --grad-text: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%);
+            
+            /* Theme Colors (Light Default) */
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-hover: #f1f5f9;
+            --bg-input: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-soft: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        html.dark {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-hover: rgba(255, 255, 255, 0.05);
+            --bg-input: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow-soft: 0 4px 6px -1px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        a { text-decoration: none; color: inherit; }
+        button { border: none; background: none; cursor: pointer; font-family: inherit; outline: none; }
+        img { max-width: 100%; display: block; }
+
+        .text-gradient { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        html.dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* --- 2. Layout & Sidebar --- */
+        .sidebar {
+            position: fixed; top: 0; left: 0; z-index: 40;
+            width: 280px; height: 100vh;
+            background: var(--bg-card); border-right: 1px solid var(--border-color);
+            transform: translateX(-100%); transition: transform 0.3s ease;
+            display: flex; flex-direction: column; overflow-y: auto;
+        }
+        .sidebar.open { transform: translateX(0); box-shadow: 10px 0 25px rgba(0,0,0,0.1); }
+        
+        .sidebar-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px);
+            z-index: 30; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.show { opacity: 1; pointer-events: auto; }
+
+        .btn-menu {
+            position: fixed; top: 16px; left: 16px; z-index: 50;
+            background: var(--bg-card); color: var(--primary);
+            width: 40px; height: 40px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid var(--border-color);
+        }
+
+        .sidebar-header {
+            height: 64px; padding: 0 16px; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1rem; }
+        .btn-close { color: var(--text-muted); display: flex; align-items: center; }
+
+        .sidebar-nav { flex: 1; padding: 16px 12px; }
+        .nav-label { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 0 8px 8px; letter-spacing: 0.5px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+            border-radius: 8px; color: var(--text-muted); font-size: 0.875rem; font-weight: 600;
+            margin-bottom: 4px; transition: background 0.2s, color 0.2s;
+        }
+        .nav-link:hover { background: var(--bg-hover); color: var(--primary); }
+        .nav-link.active { background: rgba(14, 116, 144, 0.1); color: var(--primary); }
+
+        .sidebar-footer { padding: 16px; border-top: 1px solid var(--border-color); }
+        .theme-toggle-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; cursor: pointer; color: var(--text-muted); }
+        .theme-toggle-row:hover { color: var(--primary); }
+        .btn-theme { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-hover); }
+        
+        .user-profile { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--grad-gold); padding: 2px; flex-shrink: 0; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid var(--bg-card); }
+        .user-info { flex: 1; overflow: hidden; }
+        .user-name { font-size: 0.875rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
+        .user-role { font-size: 0.7rem; color: var(--text-muted); }
+        .btn-logout { color: var(--text-muted); display: flex; }
+        .btn-logout:hover { color: var(--primary); }
+
+        /* --- 3. Main Content --- */
+        .main-content { padding: 80px 16px 32px; min-height: 100vh; transition: margin-left 0.3s ease; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .breadcrumb { display: flex; align-items: center; gap: 4px; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px; }
+        .breadcrumb .active { color: var(--primary); font-weight: 600; }
+        .page-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 24px; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--bg-card); border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: flex-start; }
+        .stat-lbl { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+        .stat-val { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+        .icon-box { padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .icon-box.primary { background: rgba(14, 116, 144, 0.1); color: var(--primary); }
+        .icon-box.orange { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+        .icon-box.emerald { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+
+        /* Actions Bar */
+        .actions-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+        .search-wrap { position: relative; width: 100%; }
+        .search-wrap .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 20px; }
+        .search-input { width: 100%; padding: 8px 12px 8px 36px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-main); font-size: 0.875rem; outline: none; font-family: inherit; }
+        
+        .action-btns { display: flex; gap: 8px; }
+        .btn-outline { display: flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-main); font-size: 0.875rem; transition: 0.2s; }
+        .btn-outline:hover { background: var(--bg-hover); }
+        .btn-solid { display: flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: var(--primary); color: white; font-size: 0.875rem; font-weight: 700; transition: 0.2s; }
+        .btn-solid:hover { background: var(--primary-dark); }
+
+        /* Table */
+        .table-wrapper { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 24px; }
+        .table-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 12px; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; background: var(--bg-hover); border-bottom: 1px solid var(--border-color); }
+        td { padding: 12px; font-size: 0.875rem; color: var(--text-main); border-bottom: 1px solid var(--border-color); }
+        tr:hover td { background: var(--bg-hover); }
+        tr:last-child td { border-bottom: none; }
+
+        .cell-preview img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
+        .cell-name { display: flex; flex-direction: column; }
+        .cell-name .en { font-weight: 600; font-size: 0.875rem; }
+        .cell-name .ar { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        
+        .pill { display: inline-flex; padding: 2px 8px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
+        .pill-amber { background: #fef3c7; color: #92400e; }
+        .pill-blue { background: #dbeafe; color: #1e40af; }
+        .pill-emerald { background: #d1fae5; color: #065f46; }
+        html.dark .pill-amber { background: rgba(146, 64, 14, 0.3); color: #fcd34d; }
+        html.dark .pill-blue { background: rgba(30, 64, 175, 0.3); color: #93c5fd; }
+        html.dark .pill-emerald { background: rgba(6, 95, 70, 0.3); color: #6ee7b7; }
+
+        .table-actions button { color: var(--text-muted); margin-right: 8px; transition: color 0.2s; display: inline-flex; }
+        .table-actions button:hover { color: var(--primary); }
+        .table-actions button.del:hover { color: #ef4444; }
+
+        .pagination-bar { padding: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .page-text { font-size: 0.75rem; color: var(--text-muted); }
+        .page-controls { display: flex; gap: 8px; }
+        .page-btn { padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; color: var(--text-muted); background: transparent; border: 1px solid transparent; transition: 0.2s; }
+        .page-btn:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-main); }
+        .page-btn.border { border-color: var(--border-color); }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
+
+        /* Slide-over Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        
+        .modal-panel {
+            position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px;
+            background: var(--bg-card); z-index: 110; box-shadow: var(--shadow-lg);
+            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; border-left: 1px solid var(--border-color);
+        }
+        .modal-panel.open { transform: translateX(0); }
+        
+        .modal-header { padding: 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-size: 1.125rem; font-weight: 800; color: var(--text-main); margin-bottom: 2px; }
+        .modal-subtitle { font-size: 0.75rem; color: var(--text-muted); }
+        .btn-close-modal { color: var(--text-muted); padding: 4px; border-radius: 4px; transition: 0.2s; }
+        .btn-close-modal:hover { background: var(--bg-hover); color: var(--text-main); }
+
+        .modal-body { flex: 1; overflow-y: auto; padding: 16px; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+        .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-input); color: var(--text-main); font-size: 0.875rem; outline: none; font-family: inherit; transition: border 0.2s; }
+        .form-input:focus { border-color: var(--primary); }
+        .form-input.rtl { text-align: right; }
+
+        .upload-zone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 24px 16px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .upload-zone:hover { border-color: rgba(14, 116, 144, 0.5); background: var(--bg-hover); }
+        .upload-icon { font-size: 40px; color: var(--text-muted); margin-bottom: 8px; }
+        .upload-text { font-size: 0.875rem; color: var(--text-muted); }
+        .upload-text span { color: var(--primary); font-weight: 600; }
+        .upload-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+        .modal-footer { padding: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
+
+        /* Floating AI */
+        .fab-ai { position: fixed; bottom: 24px; right: 24px; z-index: 60; width: 56px; height: 56px; border-radius: 50%; background: var(--grad-gold); color: white; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .fab-ai:active { transform: scale(0.95); }
+
+        /* Footer */
+        .footer { padding: 32px 16px; text-align: center; border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+        /* --- 4. Breakpoints --- */
+        @media (max-width: 639px) {
+            .hide-sm { display: none; }
+            .cell-preview img { width: 28px; height: 28px; }
+            .cell-name .en { font-size: 0.75rem; }
+            .cell-name .ar { font-size: 0.65rem; }
+            td, th { padding: 10px 8px; }
+        }
+
+        @media (max-width: 767px) {
+            .hide-md { display: none; }
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .actions-bar { flex-direction: row; justify-content: space-between; align-items: center; }
+            .search-wrap { width: 250px; }
+        }
+
+        @media (min-width: 1024px) {
+            .main-content { padding-top: 24px; margin-left: 280px; }
+            .btn-menu { display: none; }
+            .sidebar { transform: translateX(0); box-shadow: none; }
+            .sidebar-overlay { display: none; }
+            .btn-close { display: none; }
+            .footer { margin-left: 280px; }
+        }
+    </style>
+</head>
+<body class="light">
+
+    <button class="btn-menu" id="menu-btn">
+        <span class="material-symbols-rounded">menu</span>
+    </button>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <span class="material-symbols-rounded text-gradient" style="font-size: 24px;">pyramid</span>
+                <span>Discover <span class="text-gradient">Egypt</span></span>
+            </div>
+            <button class="btn-close" id="close-btn"><span class="material-symbols-rounded">close</span></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-label">Main</div>
+            <a href="#" class="nav-link">
+                <span class="material-symbols-rounded">dashboard</span> Dashboard
+            </a>
+            <a href="#" class="nav-link active">
+                <span class="material-symbols-rounded">place</span> Manage Places
+            </a>
+            <a href="#" class="nav-link">
+                <span class="material-symbols-rounded">amp_stories</span> Manage Stories
+            </a>
+            <a href="#" class="nav-link">
+                <span class="material-symbols-rounded">reviews</span> Reviews
+            </a>
+            
+            <div class="nav-label" style="margin-top: 16px;">Tools</div>
+            <a href="#" class="nav-link">
+                <span class="material-symbols-rounded">qr_code_scanner</span> AI Scanner
+            </a>
+            <a href="#" class="nav-link">
+                <span class="material-symbols-rounded">map</span> Planner
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="theme-toggle-row" id="theme-toggle">
+                <div class="btn-theme">
+                    <span class="material-symbols-rounded icon-dark">dark_mode</span>
+                    <span class="material-symbols-rounded icon-light" style="display: none; color: #fbbf24;">light_mode</span>
+                </div>
+                <span style="font-size: 0.875rem; font-weight: 500;">Toggle theme</span>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZpYmc4t3bAH9Jm0EnhNqhNg8dcQ9aalcm0iKVCReogxnnuqzO05Ai7iQjYePx1lHI-cFJiydicxI0m1UcGf4SMg2w-LOAOlwPd0PlCkTVh4j2_1aaSWI4w9ZVPvViYtVG8Z4k4caOwJS-55ofIZ1CaI4nvyKdVABMaXORAW3ce-c4dpRagIz-QoHsafSxJKdBQgFAGOizxH22WC0b0qk7kOv0rrssTE0nx2BPgfMtN5yrfGHUYqeumTAUf0oF7UaVIFjp5jE2kpww" alt="Admin">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Ahmed Hassan</div>
+                    <div class="user-role">Super Admin</div>
+                </div>
+                <button class="btn-logout"><span class="material-symbols-rounded">logout</span></button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container">
+            
+            <div class="breadcrumb">
+                <a href="#">Dashboard</a>
+                <span class="material-symbols-rounded" style="font-size: 16px;">chevron_right</span>
+                <span class="active">Manage Places</span>
+            </div>
+            <h1 class="page-title">Manage Places</h1>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div>
+                        <div class="stat-lbl">Total Landmarks</div>
+                        <div class="stat-val">142</div>
+                    </div>
+                    <div class="icon-box primary"><span class="material-symbols-rounded">museum</span></div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <div class="stat-lbl">Pending Review</div>
+                        <div class="stat-val">5</div>
+                    </div>
+                    <div class="icon-box orange"><span class="material-symbols-rounded">pending_actions</span></div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <div class="stat-lbl">Featured Sites</div>
+                        <div class="stat-val">12</div>
+                    </div>
+                    <div class="icon-box emerald"><span class="material-symbols-rounded">star</span></div>
+                </div>
+            </div>
+
+            <div class="actions-bar">
+                <div class="search-wrap">
+                    <span class="material-symbols-rounded icon">search</span>
+                    <input type="text" class="search-input" placeholder="Search by name, city...">
+                </div>
+                <div class="action-btns">
+                    <button class="btn-outline">
+                        <span class="material-symbols-rounded" style="font-size: 20px;">filter_list</span> Filter
+                    </button>
+                    <button class="btn-solid" onclick="openModal()">
+                        <span class="material-symbols-rounded" style="font-size: 20px;">add</span> Add Place
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Preview</th>
+                                <th>Place Name</th>
+                                <th class="hide-sm">Category</th>
+                                <th class="hide-md">Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="cell-preview"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyEYNJobWthddsmjAxmFh1XmJUn7yzAKpOl4SvESMEA4cPXOMUmGcxA_hn2JY_V3lzkIKVRlOiRZMSmpEoz3c4SxEnbKjgr4ckrNZE7GKE_1-NurqRQGjjH5qOFBO-K3mdw8ru5iSSzuKpD0eL074dwUYVGnuY5DEUW59yGKplAkW-Zye6LmE07vddcXbbqj3yAfDgO2lv09A58C9_VJqGbCWoRnNBS787qEnWgx4QcsGH8SzTyKqX3VjJuqtK7hsgg6W2cWG2ozRK" alt=""></td>
+                                <td>
+                                    <div class="cell-name">
+                                        <span class="en">Great Pyramid of Giza</span>
+                                        <span class="ar font-arabic">هرم الجيزة الأكبر</span>
+                                    </div>
+                                </td>
+                                <td class="hide-sm"><span class="pill pill-amber">Historical Site</span></td>
+                                <td class="hide-md"><span style="font-size: 0.8rem; color: var(--text-muted);">Giza, Cairo</span></td>
+                                <td><span class="pill pill-emerald">Active</span></td>
+                                <td class="table-actions">
+                                    <button><span class="material-symbols-rounded">edit</span></button>
+                                    <button class="del"><span class="material-symbols-rounded">delete</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cell-preview"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjfLtIHE0nyIcLZBmuFfCdSTiFhoMsx6FnCjdvuzjfwqReHdQJC3X-ez8myp6gPPrfzAhZrjAjW_VeVD69o2w_ksj1tnTCDRNWT8ciYStPpGPHddkgSsbuJr885LjX5LjUkA78Z2F3l9_iarxSkgWlPHQ7N7y-oVuA3OxCjaaGCX3NcrfKx-PfoKFqYqTtxFlEnibz7w3M0q8o7by1x2vGJTmWmhgq6mJxpHx3P_MfJS7jecrR3XZLWeMoL6bGYzA4zeCKVVWOhuem" alt=""></td>
+                                <td>
+                                    <div class="cell-name">
+                                        <span class="en">Karnak Temple Complex</span>
+                                        <span class="ar font-arabic">مجمع معابد الكرنك</span>
+                                    </div>
+                                </td>
+                                <td class="hide-sm"><span class="pill pill-blue">Temple</span></td>
+                                <td class="hide-md"><span style="font-size: 0.8rem; color: var(--text-muted);">Luxor</span></td>
+                                <td><span class="pill pill-emerald">Active</span></td>
+                                <td class="table-actions">
+                                    <button><span class="material-symbols-rounded">edit</span></button>
+                                    <button class="del"><span class="material-symbols-rounded">delete</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination-bar">
+                    <span class="page-text">Showing 1 to 5 of 142 results</span>
+                    <div class="page-controls">
+                        <button class="page-btn border" disabled>Previous</button>
+                        <div style="display: flex; gap: 4px;">
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                        </div>
+                        <button class="page-btn active" style="font-weight: 400;">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer hidden-desktop">
+        <div class="brand" style="justify-content: center; margin-bottom: 8px;">
+            <span class="material-symbols-rounded icon text-gradient" style="font-size: 20px;">pyramid</span>
+            <span>Discovering Egypt</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.75rem;">© 2024 Platform. Powered by .NET & AI.</p>
+    </footer>
+
+    <button class="fab-ai">
+        <span class="material-symbols-rounded" style="font-size: 28px;">smart_toy</span>
+    </button>
+
+    <div class="modal-overlay" id="add-modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-panel" id="add-modal-panel">
+        <div class="modal-header">
+            <div>
+                <h2 class="modal-title">Add New Place</h2>
+                <p class="modal-subtitle">Fill in the details to list a new landmark.</p>
+            </div>
+            <button class="btn-close-modal" onclick="closeModal()"><span class="material-symbols-rounded">close</span></button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">Cover Image</label>
+                <div class="upload-zone">
+                    <span class="material-symbols-rounded upload-icon">cloud_upload</span>
+                    <div class="upload-text"><span>Upload a file</span> or drag and drop</div>
+                    <div class="upload-hint">PNG, JPG up to 10MB</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Name (English)</label>
+                <input type="text" class="form-input" placeholder="e.g. Karnak Temple">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Name (Arabic)</label>
+                <input type="text" class="form-input font-arabic rtl" placeholder="مثال: معبد الكرنك">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select class="form-input" style="padding-right: 32px;">
+                    <option>Historical Site</option>
+                    <option>Museum</option>
+                    <option>Temple</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" placeholder="City, Governorate">
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn-outline" onclick="closeModal()">Cancel</button>
+            <button class="btn-solid">Save Place</button>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        const btnMenu = document.getElementById('menu-btn');
+        const btnClose = document.getElementById('close-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        btnMenu.addEventListener('click', toggleSidebar);
+        btnClose.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Modal Logic
+        const modalOverlay = document.getElementById('add-modal-overlay');
+        const modalPanel = document.getElementById('add-modal-panel');
+
+        function openModal() {
+            modalOverlay.classList.add('open');
+            modalPanel.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+            modalPanel.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) { 
+            if (e.key === 'Escape' && modalPanel.classList.contains('open')) closeModal(); 
+        });
+
+        // Theme Toggle
+        const html = document.documentElement;
+        const toggleThemeBtn = document.getElementById('theme-toggle');
+        const iconDark = document.querySelector('.icon-dark');
+        const iconLight = document.querySelector('.icon-light');
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            html.classList.add('dark');
+            iconDark.style.display = 'none';
+            iconLight.style.display = 'block';
+        }
+
+        toggleThemeBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                localStorage.setItem('theme', 'dark');
+                iconDark.style.display = 'none';
+                iconLight.style.display = 'block';
+            } else {
+                localStorage.setItem('theme', 'light');
+                iconDark.style.display = 'block';
+                iconLight.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
