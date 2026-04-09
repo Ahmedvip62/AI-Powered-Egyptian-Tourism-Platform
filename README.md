@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://img.shields.io/badge/Egypt-Tourism%20AI-c8a850?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2M4YTg1MCIgZD0iTTEyIDJMMyAyMmgxOEwxMiAyem0wIDRsNi41IDEySC41NUwxMiA2eiIvPjwvc3ZnPg==" alt="Egypt Tourism AI"/>
+
 # 🏛️ AI-Powered Egyptian Tourism Platform
 
 ### *Intelligent Visual Tour Guide — Powered by CLIP + FAISS + RAG*
@@ -10,16 +12,15 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://docker.com)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen?style=flat-square)]()
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)]()
 
 <br/>
 
-> Upload a photo of any Egyptian monument — get instant AI-generated historical context,  
-> powered by Visual Retrieval-Augmented Generation.
+> Upload a photo of any Egyptian monument — get instant AI-generated historical context, powered by Visual Retrieval-Augmented Generation.
 
 <br/>
 
-**[🚀 Live Demo](#)** &nbsp;·&nbsp; **[📄 Proposal](docs/AI_Tourism_Proposal.pdf)** &nbsp;·&nbsp; **[🐛 Report Bug](../../issues)**
+**[📊 View UML Diagrams](https://htmlpreview.github.io/?https://github.com/Ahmedvip62/AI-Powered-Egyptian-Tourism-Platform/blob/main/docs/diagrams/tourism_diagrams.html)** · **[📄 Read Proposal](docs/AI_Tourism_Proposal.pdf)** · **[🚀 Live Demo](#-demo)** · **[🐛 Report Bug](https://github.com/Ahmedvip62/AI-Powered-Egyptian-Tourism-Platform/issues)**
 
 </div>
 
@@ -29,24 +30,14 @@
 
 - [Overview](#-overview)
 - [Features](#-features)
-- [Tech Stack](#-tech-stack)
 - [System Architecture](#-system-architecture)
-- [UML Diagrams](#-uml-diagrams)
-  - [Class Diagram](#1-class-diagram)
-  - [Entity Relationship Diagram](#2-entity-relationship-diagram)
-  - [Use Case Diagram](#3-use-case-diagram)
-  - [Sequence Diagram — AI Pipeline](#4-sequence-diagram--ai-pipeline)
-  - [Sequence Diagram — Authentication](#5-sequence-diagram--authentication)
-  - [Activity Diagram — AI Analysis](#6-activity-diagram--ai-analysis)
-  - [Activity Diagram — Itinerary](#7-activity-diagram--itinerary-planning)
-  - [Component Diagram](#8-component-diagram)
-  - [Deployment Diagram](#9-deployment-diagram)
-  - [State Machine — AI Query](#10-state-machine--ai-query)
-  - [State Machine — User Session](#11-state-machine--user-session)
+- [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
+- [AI Pipeline](#-ai-pipeline)
 - [Team](#-team)
 - [Milestones](#-milestones)
+- [License](#-license)
 
 ---
 
@@ -54,11 +45,10 @@
 
 The **AI-Powered Egyptian Tourism Platform** is a graduation project that brings Egypt's ancient heritage to life through artificial intelligence. Users can explore all Egyptian governorates, browse thousands of archaeological sites, and use our AI visual assistant to identify monuments and receive rich historical descriptions — all in real time.
 
-The core innovation is a **Visual RAG (Retrieval-Augmented Generation)** pipeline:
-
-```
-Upload Image  →  CLIP Encoding  →  FAISS Vector Search  →  LLM Generation  →  Historical Description
-```
+The core innovation is a **Visual RAG (Retrieval-Augmented Generation)** pipeline that:
+1. Encodes uploaded monument images via **CLIP** into semantic vectors
+2. Searches a curated heritage **vector database (FAISS)** for similar monuments
+3. Passes retrieved context to an **LLM** to generate accurate historical narratives
 
 ---
 
@@ -67,24 +57,12 @@ Upload Image  →  CLIP Encoding  →  FAISS Vector Search  →  LLM Generation 
 | Feature | Description | Status |
 |---|---|---|
 | 🗺️ **Governorate Explorer** | Browse all 27 Egyptian governorates with sites & landmarks | ✅ Planned |
-| 🤖 **AI Monument Identifier** | Upload image → instant historical description | ✅ Core Feature |
+| 🤖 **AI Monument Identifier** | Upload image → get instant historical description | ✅ Core Feature |
 | 🔍 **Smart Search** | Filter sites by era, type, region | ✅ Planned |
 | 📅 **Itinerary Builder** | Plan custom multi-day tours | ✅ Planned |
 | ⭐ **Reviews & Ratings** | Community-driven site ratings | ✅ Planned |
 | 🌐 **Multi-language** | Arabic & English support | 🔄 In Progress |
 | 📄 **PDF Export** | Export AI reports as branded PDFs | ✅ Done |
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **AI / Vision** | OpenAI CLIP (ViT-B/32), FAISS, PyTorch, Transformers, LLM |
-| **AI Service** | Python 3.12, FastAPI |
-| **Backend** | .NET 8 / ASP.NET Core, PostgreSQL, Redis |
-| **Frontend** | React 18, Vite, Tailwind CSS, React Query |
-| **DevOps** | Docker, Docker Compose, AWS ECS/S3/RDS, GitHub Actions |
 
 ---
 
@@ -97,19 +75,19 @@ Upload Image  →  CLIP Encoding  →  FAISS Vector Search  →  LLM Generation 
 └──────────────────────────┬──────────────────────────────┘
                            │ HTTPS / REST
 ┌──────────────────────────▼──────────────────────────────┐
-│               API GATEWAY  (FastAPI)                    │
-│              Auth  ·  Rate Limit  ·  Routing            │
+│                    API GATEWAY                          │
+│              FastAPI  ·  Auth  ·  Rate Limit            │
 └──────┬───────────────────┬───────────────────┬──────────┘
        │                   │                   │
 ┌──────▼──────┐  ┌─────────▼──────┐  ┌────────▼────────┐
 │  .NET API   │  │  AI Service    │  │  Search Service │
 │ Sites/Users │  │  Python/Torch  │  │   Full-text     │
-└──────┬──────┘  └────────┬───────┘  └────────┬────────┘
-       │                  │                    │
-       │         ┌────────▼────────┐           │
-       │         │   RAG PIPELINE  │           │
-       │         │ CLIP→FAISS→LLM  │           │
-       │         └─────────────────┘           │
+└──────┬──────┘  └─────────┬──────┘  └────────┬────────┘
+       │                   │                   │
+       │          ┌────────▼────────┐          │
+       │          │   RAG PIPELINE  │          │
+       │          │ CLIP→FAISS→LLM  │          │
+       │          └─────────────────┘          │
        │                                       │
 ┌──────▼───────────────────────────────────────▼──────────┐
 │                      DATA LAYER                         │
@@ -117,478 +95,41 @@ Upload Image  →  CLIP Encoding  →  FAISS Vector Search  →  LLM Generation 
 └─────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 📐 UML Diagrams
-
-### 1. Class Diagram
-
-```mermaid
-classDiagram
-    class User {
-        +int id
-        +string name
-        +string email
-        +string passwordHash
-        +register()
-        +login()
-        +updateProfile()
-    }
-    class TouristSite {
-        +int id
-        +string name
-        +string governorate
-        +string category
-        +float latitude
-        +float longitude
-        +getDetails()
-        +getRelatedSites()
-    }
-    class Governorate {
-        +int id
-        +string name
-        +string arabicName
-        +string region
-        +getSites()
-    }
-    class AIQuery {
-        +int id
-        +int userId
-        +string imageUrl
-        +float[] embedding
-        +string generatedDescription
-        +float confidenceScore
-        +processImage()
-        +retrieveContext()
-        +generateResponse()
-    }
-    class Monument {
-        +int id
-        +int siteId
-        +string name
-        +string dynasty
-        +string period
-        +getHistoricalContext()
-    }
-    class Review {
-        +int id
-        +int userId
-        +int siteId
-        +int rating
-        +string comment
-        +submit()
-    }
-    class CLIPEncoder {
-        +string modelName
-        +int embeddingDim
-        +encode(image) float[]
-        +preprocess(image)
-    }
-    class VectorDatabase {
-        +string collectionName
-        +insert(embedding)
-        +search(queryEmbedding, topK)
-    }
-    class LLMService {
-        +string modelName
-        +generateDescription(context)
-        +translate(text, lang)
-    }
-    class Itinerary {
-        +int id
-        +int userId
-        +string name
-        +TouristSite[] sites
-        +addSite(siteId)
-        +export()
-    }
-
-    User "1" --> "0..*" Review : writes
-    User "1" --> "0..*" Itinerary : creates
-    User "1" --> "0..*" AIQuery : submits
-    TouristSite "1" --> "0..*" Review : receives
-    TouristSite "1" --> "0..*" Monument : contains
-    TouristSite "0..*" --> "1" Governorate : belongsTo
-    AIQuery --> CLIPEncoder : uses
-    AIQuery --> VectorDatabase : queries
-    AIQuery --> LLMService : uses
-    Itinerary "0..*" --> "0..*" TouristSite : includes
-```
+> 📊 Full UML diagrams (Class, ERD, Use Case, Sequence, Activity, Component, Deployment, State Machine) → **[View Here](https://htmlpreview.github.io/?https://github.com/Ahmedvip62/AI-Powered-Egyptian-Tourism-Platform/blob/main/docs/diagrams/tourism_diagrams.html)**
 
 ---
 
-### 2. Entity Relationship Diagram
+## 🛠️ Tech Stack
 
-```mermaid
-erDiagram
-    USERS {
-        int id PK
-        string name
-        string email
-        string password_hash
-        string preferred_language
-        datetime created_at
-    }
-    GOVERNORATES {
-        int id PK
-        string name
-        string arabic_name
-        string region
-    }
-    TOURIST_SITES {
-        int id PK
-        int governorate_id FK
-        string name
-        text description
-        string category
-        float latitude
-        float longitude
-        float avg_rating
-    }
-    MONUMENTS {
-        int id PK
-        int site_id FK
-        string name
-        string dynasty
-        string period
-        text historical_context
-    }
-    SITE_IMAGES {
-        int id PK
-        int site_id FK
-        string image_url
-        boolean is_primary
-    }
-    AI_QUERIES {
-        int id PK
-        int user_id FK
-        string image_url
-        text generated_description
-        float confidence_score
-        datetime created_at
-    }
-    EMBEDDINGS {
-        int id PK
-        int monument_id FK
-        string vector_id
-        string model_version
-    }
-    REVIEWS {
-        int id PK
-        int user_id FK
-        int site_id FK
-        int rating
-        text comment
-    }
-    ITINERARIES {
-        int id PK
-        int user_id FK
-        string name
-        date start_date
-        date end_date
-    }
-    ITINERARY_SITES {
-        int itinerary_id FK
-        int site_id FK
-        int visit_order
-        int duration_minutes
-    }
+### AI / Machine Learning
+| Tool | Purpose |
+|---|---|
+| `OpenAI CLIP (ViT-B/32)` | Image → 512-dim semantic embedding |
+| `FAISS (FlatL2)` | High-speed vector similarity search |
+| `PyTorch + Transformers` | Model loading & inference |
+| `LLM (GPT / Local)` | Historical description generation |
 
-    USERS ||--o{ REVIEWS : "writes"
-    USERS ||--o{ AI_QUERIES : "submits"
-    USERS ||--o{ ITINERARIES : "creates"
-    GOVERNORATES ||--o{ TOURIST_SITES : "contains"
-    TOURIST_SITES ||--o{ MONUMENTS : "has"
-    TOURIST_SITES ||--o{ SITE_IMAGES : "has"
-    TOURIST_SITES ||--o{ REVIEWS : "receives"
-    MONUMENTS ||--o{ EMBEDDINGS : "has"
-    ITINERARIES ||--o{ ITINERARY_SITES : "includes"
-    TOURIST_SITES ||--o{ ITINERARY_SITES : "appears_in"
-```
+### Backend
+| Tool | Purpose |
+|---|---|
+| `FastAPI (Python 3.12)` | AI service API & gateway |
+| `.NET 8 / ASP.NET Core` | Sites, Users, Reviews REST API |
+| `PostgreSQL` | Primary relational database |
+| `Redis` | Session cache & rate limiting |
 
----
+### Frontend
+| Tool | Purpose |
+|---|---|
+| `React 18 + Vite` | Web application UI |
+| `Tailwind CSS` | Styling |
+| `React Query` | Server state management |
 
-### 3. Use Case Diagram
-
-```mermaid
-flowchart LR
-    Tourist(["👤 Tourist\nGuest"])
-    RegUser(["👤 Registered\nUser"])
-    Admin(["👤 Admin"])
-    AI(["🤖 AI Engine"])
-
-    subgraph System["🏛️ Egyptian Tourism Platform"]
-        direction TB
-        UC1["Browse Sites by Governorate"]
-        UC2["View Site Details"]
-        UC3["Search & Filter Sites"]
-        UC4["Upload Monument Image"]
-        UC5["Receive AI Description"]
-        UC6["Register / Login"]
-        UC7["Write Review"]
-        UC8["Create Itinerary"]
-        UC9["Save Favourite Sites"]
-        UC10["Manage Sites & Content"]
-        UC11["Manage Users"]
-        UC12["View Analytics"]
-        UC13["Update AI Model"]
-    end
-
-    Tourist --> UC1 & UC2 & UC3 & UC4 & UC6
-    RegUser --> UC1 & UC2 & UC3 & UC4 & UC7 & UC8 & UC9
-    UC4 --> UC5
-    UC5 --> AI
-    Admin --> UC10 & UC11 & UC12 & UC13
-```
-
----
-
-### 4. Sequence Diagram — AI Pipeline
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Frontend
-    participant Gateway as API Gateway
-    participant AI as AI Service
-    participant CLIP as CLIP Encoder
-    participant FAISS as Vector DB (FAISS)
-    participant LLM as Language Model
-
-    User->>Frontend: Upload monument image
-    Frontend->>Frontend: Validate format & size
-    Frontend->>Gateway: POST /api/ai/analyze
-    Gateway->>AI: Forward request
-    AI->>CLIP: encode(image)
-    CLIP-->>AI: 512-dim embedding
-    AI->>FAISS: search(embedding, topK=5)
-    FAISS-->>AI: Top-5 similar monuments
-    AI->>LLM: generate(context, prompt)
-    LLM-->>AI: Historical description
-    AI->>AI: Save query to DB
-    AI-->>Gateway: description + confidence
-    Gateway-->>Frontend: 200 OK
-    Frontend-->>User: Display result
-```
-
----
-
-### 5. Sequence Diagram — Authentication
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Frontend
-    participant API as Backend API (.NET)
-    participant Auth as Auth Service
-    participant DB as PostgreSQL
-
-    User->>Frontend: Fill registration form
-    Frontend->>Frontend: Client-side validation
-    Frontend->>API: POST /api/auth/register
-    API->>DB: Check email exists
-    DB-->>API: Not found
-    API->>Auth: hashPassword(password)
-    Auth-->>API: passwordHash
-    API->>DB: INSERT user
-    DB-->>API: User created
-    API->>Auth: generateJWT(userId)
-    Auth-->>API: JWT token
-    API-->>Frontend: 201 Created + token
-    Frontend-->>User: Redirect to dashboard
-```
-
----
-
-### 6. Activity Diagram — AI Analysis
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[User selects image]
-    B --> C{Valid format?}
-    C -- No --> D[Show error]
-    D --> B
-    C -- Yes --> E{Size under 10MB?}
-    E -- No --> F[Show size error]
-    F --> B
-    E -- Yes --> G[Upload to storage]
-    G --> H[Send to AI Service]
-    H --> I[CLIP encodes image\nto 512-dim vector]
-    I --> J[FAISS retrieves\nTop-5 monuments]
-    J --> K{Confidence\nover 0.6?}
-    K -- No --> L[Return generic\nEgypt description]
-    K -- Yes --> M[Retrieve historical texts]
-    M --> N[LLM generates description]
-    N --> O[Save query to DB]
-    L --> P[Return result to user]
-    O --> P
-    P --> Q([End])
-```
-
----
-
-### 7. Activity Diagram — Itinerary Planning
-
-```mermaid
-flowchart TD
-    A([Start]) --> B[Open Itinerary Builder]
-    B --> C[Select governorate]
-    C --> D[Browse available sites]
-    D --> E{Add site?}
-    E -- Yes --> F[Set visit date & duration]
-    F --> G[Add to itinerary]
-    G --> H{Add another?}
-    H -- Yes --> D
-    H -- No --> I[Review itinerary]
-    E -- No --> D
-    I --> J{Reorder sites?}
-    J -- Yes --> K[Drag & drop reorder]
-    K --> I
-    J -- No --> L[Name itinerary]
-    L --> M{Save as public?}
-    M -- Public --> N[Save & generate share link]
-    M -- Private --> O[Save privately]
-    N --> P([End])
-    O --> P
-```
-
----
-
-### 8. Component Diagram
-
-```mermaid
-flowchart TB
-    subgraph Client["🖥️ Client Layer"]
-        React["⚛️ React Frontend"]
-    end
-
-    subgraph GW["🔀 API Gateway (FastAPI)"]
-        Auth["Auth Middleware"]
-        Router["Request Router"]
-        RateLimit["Rate Limiter"]
-    end
-
-    subgraph Backend["⚙️ Backend Services (.NET)"]
-        SiteAPI["Site & Governorate API"]
-        UserAPI["User & Auth API"]
-        ReviewAPI["Review API"]
-    end
-
-    subgraph AICore["🧠 AI Service (Python)"]
-        CLIP["CLIP Encoder"]
-        FAISS["FAISS Vector DB"]
-        LLM["LLM Generator"]
-        RAG["RAG Orchestrator"]
-    end
-
-    subgraph Data["🗄️ Data Layer"]
-        PG["PostgreSQL"]
-        Redis["Redis Cache"]
-        S3["AWS S3"]
-    end
-
-    React -->|HTTPS| GW
-    GW --> SiteAPI & UserAPI & ReviewAPI & RAG
-    RAG --> CLIP --> FAISS --> LLM
-    SiteAPI & UserAPI & ReviewAPI --> PG
-    UserAPI --> Redis
-    RAG --> S3
-```
-
----
-
-### 9. Deployment Diagram
-
-```mermaid
-flowchart TB
-    User(["👤 End User"])
-
-    subgraph CDN["🌐 CloudFront CDN"]
-        CF["React Static Build"]
-    end
-
-    subgraph AWS["☁️ AWS Cloud"]
-        ALB["Application Load Balancer"]
-
-        subgraph ECS["ECS Containers"]
-            C1["🐳 .NET API"]
-            C2["🐳 FastAPI Gateway"]
-            C3["🐳 AI Service (GPU)"]
-        end
-
-        subgraph Storage["Data Layer"]
-            RDS["🐘 RDS PostgreSQL"]
-            Cache["⚡ ElastiCache Redis"]
-            Bucket["🪣 S3 Bucket"]
-        end
-
-        FAISS_SVC["FAISS Vector Service"]
-    end
-
-    User -->|HTTPS| CF
-    CF -->|API| ALB
-    ALB --> C1 & C2 & C3
-    C1 --> RDS & Cache
-    C2 --> RDS
-    C3 --> FAISS_SVC & Bucket
-```
-
----
-
-### 10. State Machine — AI Query
-
-```mermaid
-stateDiagram-v2
-    [*] --> Idle
-
-    Idle --> Uploading : User submits image
-    Uploading --> Validating : Image received
-    Validating --> Encoding : Passed validation
-    Validating --> Failed : Invalid file
-
-    Encoding --> Retrieving : CLIP done
-    Retrieving --> Generating : High confidence
-    Retrieving --> Fallback : Low confidence
-
-    Generating --> Completed : Description ready
-    Fallback --> Completed : Generic response
-
-    Completed --> Saving : Write to DB
-    Saving --> Idle : Done
-
-    Failed --> Idle : Error returned
-```
-
----
-
-### 11. State Machine — User Session
-
-```mermaid
-stateDiagram-v2
-    [*] --> Guest
-
-    Guest --> Registering : Click register
-    Guest --> LoggingIn : Click login
-
-    Registering --> Verified : Email verified
-    Registering --> Guest : Cancel
-
-    LoggingIn --> Authenticated : Valid credentials
-    LoggingIn --> Guest : Wrong credentials
-
-    Authenticated --> BrowsingSites : Browse
-    Authenticated --> UsingAI : Upload image
-    Authenticated --> PlanningTrip : Itinerary
-    Authenticated --> LoggedOut : Logout
-
-    BrowsingSites --> Authenticated
-    UsingAI --> Authenticated
-    PlanningTrip --> Authenticated
-
-    Verified --> LoggingIn
-    LoggedOut --> Guest
-    LoggedOut --> [*]
-```
+### DevOps
+| Tool | Purpose |
+|---|---|
+| `Docker + Docker Compose` | Containerization |
+| `AWS ECS + S3 + RDS` | Cloud deployment |
+| `GitHub Actions` | CI/CD pipeline |
 
 ---
 
@@ -597,46 +138,71 @@ stateDiagram-v2
 ```
 AI-Powered-Egyptian-Tourism-Platform/
 │
-├── 📁 frontend/                    # React 18 + Vite
-│   └── src/
-│       ├── components/             # Reusable UI components
-│       ├── pages/                  # Home, Explorer, AI Tool, Itinerary
-│       ├── hooks/                  # Custom React hooks
-│       └── utils/                  # Helper functions
+├── 📁 frontend/                    # React.js Web Application
+│   ├── src/
+│   │   ├── components/             # Reusable UI components
+│   │   ├── pages/                  # Home, Explorer, AI Tool, Itinerary
+│   │   ├── hooks/                  # Custom React hooks
+│   │   └── utils/                  # Helper functions
+│   ├── public/
+│   └── package.json
 │
 ├── 📁 backend/                     # .NET 8 REST API
 │   ├── Controllers/                # SiteController, UserController, ReviewController
-│   ├── Models/                     # Entity models
-│   ├── Services/                   # Business logic
-│   └── Data/                       # EF Core DbContext & Migrations
+│   ├── Models/                     # Entity models (Site, User, Monument, ...)
+│   ├── Services/                   # Business logic layer
+│   ├── Data/                       # EF Core DbContext & migrations
+│   └── Program.cs
 │
 ├── 📁 ai-service/                  # Python AI Pipeline (FastAPI)
-│   ├── encoders/clip_encoder.py    # CLIP image encoding
-│   ├── retrieval/vector_search.py  # FAISS similarity search
-│   ├── generation/llm_generator.py # LLM description generation
+│   ├── encoders/
+│   │   └── clip_encoder.py         # CLIP image encoding
+│   ├── retrieval/
+│   │   └── vector_search.py        # FAISS similarity search
+│   ├── generation/
+│   │   └── llm_generator.py        # LLM description generation
+│   ├── api/
+│   │   └── routes.py               # FastAPI endpoints
 │   ├── rag_pipeline.py             # Orchestrates full RAG flow
+│   ├── main.py                     # App entry point
 │   └── requirements.txt
 │
-├── 📁 data/                        # Tourism Dataset (1,500+ images)
+├── 📁 data/                        # Tourism Dataset
 │   ├── monuments/                  # Monument metadata (JSON)
 │   ├── embeddings/                 # Precomputed CLIP vectors
 │   ├── knowledge-base/             # Historical texts (JSONL)
-│   └── scripts/                    # Scraping & preprocessing
+│   └── scripts/                   # Data collection & scraping scripts
 │
-├── 📁 ml-training/notebooks/       # Google Colab training notebooks
-│   ├── 01_data_collection.ipynb
-│   ├── 02_clip_indexing.ipynb
-│   └── 03_rag_evaluation.ipynb
+├── 📁 ml-training/                 # Model Training (Google Colab)
+│   └── notebooks/
+│       ├── 01_data_collection.ipynb
+│       ├── 02_clip_indexing.ipynb
+│       └── 03_rag_evaluation.ipynb
 │
-├── 📁 deployment/                  # Docker + AWS configs
-│   ├── docker/                     # Dockerfiles per service
+├── 📁 deployment/                  # Infrastructure & DevOps
+│   ├── docker/
+│   │   ├── Dockerfile.frontend
+│   │   ├── Dockerfile.backend
+│   │   └── Dockerfile.ai
 │   ├── aws/                        # ECS task definitions
 │   └── nginx/                      # Reverse proxy config
 │
-├── 📁 docs/diagrams/               # UML diagrams (HTML interactive)
-├── 📁 .github/workflows/           # GitHub Actions CI/CD
+├── 📁 docs/                        # Documentation
+│   ├── diagrams/
+│   │   └── tourism_diagrams.html   # ← Full UML Diagrams (interactive)
+│   └── AI_Tourism_Proposal.pdf
+│
+├── 📁 .github/
+│   ├── workflows/
+│   │   └── ci.yml                  # GitHub Actions CI/CD
+│   └── ISSUE_TEMPLATE/
+│       ├── bug_report.md
+│       └── feature_request.md
+│
 ├── docker-compose.yml              # Local dev environment
+├── docker-compose.prod.yml         # Production config
 ├── .env.example                    # Environment variables template
+├── .gitignore
 └── README.md
 ```
 
@@ -646,36 +212,80 @@ AI-Powered-Egyptian-Tourism-Platform/
 
 ### Prerequisites
 
-- Python 3.12+ · Node.js 20+ · .NET 8 SDK · Docker
+- Python 3.12+
+- Node.js 20+
+- .NET 8 SDK
+- Docker & Docker Compose
 
-### Run with Docker (recommended)
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Ahmedvip62/AI-Powered-Egyptian-Tourism-Platform.git
 cd AI-Powered-Egyptian-Tourism-Platform
-cp .env.example .env          # fill in your credentials
+```
+
+### 2. Configure environment
+
+```bash
+cp .env.example .env
+# Edit .env with your API keys and DB credentials
+```
+
+### 3. Run with Docker Compose (recommended)
+
+```bash
 docker-compose up --build
 ```
 
 | Service | URL |
 |---|---|
 | Frontend | http://localhost:3000 |
-| .NET API + Swagger | http://localhost:5000/swagger |
-| AI Service + Docs | http://localhost:8001/docs |
+| .NET API | http://localhost:5000/swagger |
+| AI Service | http://localhost:8001/docs |
 
-### Run services individually
+### 4. Run services individually
 
 ```bash
 # AI Service
-cd ai-service && pip install -r requirements.txt
+cd ai-service
+pip install -r requirements.txt
 uvicorn main:app --reload --port 8001
 
 # Frontend
-cd frontend && npm install && npm run dev
+cd frontend
+npm install && npm run dev
 
-# Backend
-cd backend && dotnet restore && dotnet run
+# Backend (.NET)
+cd backend
+dotnet restore && dotnet run
 ```
+
+---
+
+## 🧠 AI Pipeline
+
+The Visual RAG pipeline processes a monument image in 3 steps:
+
+```
+User uploads image
+        │
+        ▼
+┌───────────────┐
+│  CLIP Encoder │  →  512-dimensional vector embedding
+└───────┬───────┘
+        │
+        ▼
+┌───────────────┐
+│  FAISS Search │  →  Top-5 most similar monuments retrieved
+└───────┬───────┘       (Confidence threshold: 0.6)
+        │
+        ▼
+┌───────────────┐
+│  LLM Generate │  →  Rich historical description
+└───────────────┘
+```
+
+**Dataset:** 1,500+ images across 50+ Egyptian landmarks scraped from Wikipedia with curated historical metadata.
 
 ---
 
@@ -683,15 +293,18 @@ cd backend && dotnet restore && dotnet run
 
 | Name | Role |
 |---|---|
-| **Ahmed Ramadan** ⭐ | Project Leader & AI Vision + RAG |
+| **Ahmed Ramadan** ⭐ | Project Leader & Coordination |
 | **Osama Abdel-Rahman** | AI Vision + RAG System |
-| **Ahmed Yaser** | Backend Development + Deployment |
-| **Ahmed Abdelkader** | Backend Development |
+| **Ahmed Ramadan** | AI Vision + RAG System |
+| **Ahmed Yaser** | Backend Development (API + DB) |
+| **Ahmed Abdelkader** | Backend Development (API + DB) |
 | **Menna Mohamed** | Frontend Development (UI/UX) |
+| **Ahmed** | Frontend Development |
 | **Amr Mohamed** | Data Collection & ML Model |
 | **Hassan Mohamed** | Data Collection & ML Model |
+| **Osama + Ahmed Yaser** | Deployment |
 
-**Academic Supervisor:** Dr. Morad Raafat
+**Supervisor:** Dr. Morad Raafat
 
 ---
 
@@ -710,13 +323,13 @@ cd backend && dotnet restore && dotnet run
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
 
-Made with ❤️ in Egypt &nbsp;·&nbsp; 2025–2026
+Made with ❤️ in Egypt · 2025–2026
 
 *Innovation meets Heritage — Preserving the past through the technology of the future* 🏛️
 
