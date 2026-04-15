@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered Egyptian Tourism Platform — UML Diagrams</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+  :root {
+    --primary: #1a3c5e;
+    --accent: #c8a850;
+    --bg: #ffffff;
+    --bg2: #f7f5f0;
+    --text: #1a1a1a;
+    --text2: #555;
+    --border: #ddd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #0a1e35 0%, #1a3c5e 50%, #0f2a45 100%);
+    color: #fff;
+    padding: 80px 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(200,168,80,0.08);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(200,168,80,0.05);
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(200,168,80,0.2);
+    border: 1px solid rgba(200,168,80,0.4);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .cover-meta-item label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span { font-size: 14px; color: rgba(255,255,255,0.8); }
+  .cover-pyramid {
+    position: absolute;
+    right: 80px;
+    bottom: 60px;
+    opacity: 0.12;
+  }
+
+  /* Layout */
+  .page { page-break-before: always; padding: 60px; max-width: 1100px; margin: 0 auto; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .section-num {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 24px; font-weight: 600; color: var(--primary); }
+
+  /* TOC */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg2);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+  .toc-item:hover { background: #ece8df; }
+  .toc-icon {
+    width: 32px; height: 32px;
+    background: var(--primary);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .toc-item-text .num { font-size: 11px; color: var(--text2); }
+  .toc-item-text .title { font-size: 14px; font-weight: 500; }
+
+  /* Diagram containers */
+  .diagram-box {
+    background: var(--bg2);
+    border-radius: 10px;
+    padding: 32px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .diagram-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .diagram-title::before {
+    content: '';
+    width: 4px; height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .note {
+    background: #fff8e6;
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    border-radius: 0 6px 6px 0;
+    margin-top: 16px;
+  }
+  .mermaid { display: flex; justify-content: center; }
+
+  /* GitHub Section */
+  .github-card {
+    background: #0d1117;
+    border-radius: 10px;
+    padding: 32px;
+    color: #c9d1d9;
+    font-family: 'Courier New', monospace;
+  }
+  .gh-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #30363d;
+  }
+  .gh-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .gh-title { font-size: 16px; color: #e6edf3; font-weight: 600; font-family: 'Segoe UI', sans-serif; }
+  .gh-subtitle { font-size: 12px; color: #8b949e; font-family: 'Segoe UI', sans-serif; }
+  .gh-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #8b949e;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .gh-badge.green { color: #3fb950; border-color: #238636; background: #0f2f15; }
+  .gh-badge.blue { color: #58a6ff; border-color: #1f6feb; background: #0d2044; }
+  .gh-file { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #8b949e; border-bottom: 1px solid #21262d; }
+  .gh-file:last-child { border-bottom: none; }
+  .gh-file .icon { color: #58a6ff; }
+  .gh-file .fname { color: #c9d1d9; }
+  .gh-file .msg { color: #8b949e; font-style: italic; flex: 1; padding-left: 16px; }
+  .gh-file .date { font-size: 11px; color: #6e7681; }
+  .terminal {
+    background: #161b22;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 2;
+    border: 1px solid #30363d;
+  }
+  .terminal .prompt { color: #3fb950; }
+  .terminal .cmd { color: #e6edf3; }
+  .terminal .comment { color: #6e7681; }
+  .branch-tag {
+    display: inline-block;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: #79c0ff;
+    margin-left: 8px;
+  }
+
+  /* Sub-diagrams */
+  .sub-section { margin-bottom: 40px; }
+  .sub-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: #eef3f8;
+    border-radius: 6px;
+  }
+
+  @media print {
+    .page { padding: 40px; }
+    .cover { min-height: auto; padding: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <svg class="cover-pyramid" width="320" height="280" viewBox="0 0 320 280">
+    <polygon points="160,20 300,260 20,260" fill="none" stroke="#c8a850" stroke-width="2"/>
+    <line x1="160" y1="20" x2="160" y2="260" stroke="#c8a850" stroke-width="1" stroke-dasharray="6,4"/>
+    <line x1="20" y1="260" x2="300" y2="260" stroke="#c8a850" stroke-width="2"/>
+    <line x1="90" y1="140" x2="230" y2="140" stroke="#c8a850" stroke-width="1" opacity="0.5"/>
+    <line x1="125" y1="80" x2="195" y2="80" stroke="#c8a850" stroke-width="1" opacity="0.3"/>
+  </svg>
+  <div class="cover-badge">Graduation Project — Software Design</div>
+  <h1>AI-Powered<br><span>Egyptian Tourism</span><br>Platform</h1>
+  <div class="cover-sub">Complete UML Design Documentation — System Architecture, Diagrams & GitHub Repository Structure</div>
+  <div>
+    <span class="gh-badge green">✓ Class Diagram</span>
+    <span class="gh-badge green">✓ ERD</span>
+    <span class="gh-badge green">✓ Use Case</span>
+    <span class="gh-badge green">✓ Sequence</span>
+    <span class="gh-badge green">✓ Activity</span>
+    <span class="gh-badge green">✓ Component</span>
+    <span class="gh-badge green">✓ Deployment</span>
+    <span class="gh-badge green">✓ State Machine</span>
+    <span class="gh-badge blue">GitHub Repo</span>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>Supervisor</label><span>Dr. Morad Raafat</span></div>
+    <div class="cover-meta-item"><label>Team Lead</label><span>Ahmed Ramadan</span></div>
+    <div class="cover-meta-item"><label>Year</label><span>2025–2026</span></div>
+    <div class="cover-meta-item"><label>Version</label><span>1.0</span></div>
+  </div>
+</div>
+
+<!-- PAGE 1: TABLE OF CONTENTS -->
+<div class="page" id="toc">
+  <div class="section-header">
+    <div class="section-num">📋</div>
+    <h2>Table of Contents</h2>
+  </div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#class">
+      <div class="toc-icon">C</div>
+      <div class="toc-item-text">
+        <div class="num">Section 1</div>
+        <div class="title">Class Diagram</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#erd">
+      <div class="toc-icon">E</div>
+      <div class="toc-item-text">
+        <div class="num">Section 2</div>
+        <div class="title">Entity Relationship Diagram</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#usecase">
+      <div class="toc-icon">U</div>
+      <div class="toc-item-text">
+        <div class="num">Section 3</div>
+        <div class="title">Use Case Diagram</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#sequence">
+      <div class="toc-icon">S</div>
+      <div class="toc-item-text">
+        <div class="num">Section 4</div>
+        <div class="title">Sequence Diagrams</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#activity">
+      <div class="toc-icon">A</div>
+      <div class="toc-item-text">
+        <div class="num">Section 5</div>
+        <div class="title">Activity Diagrams</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#component">
+      <div class="toc-icon">K</div>
+      <div class="toc-item-text">
+        <div class="num">Section 6</div>
+        <div class="title">Component Diagram</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#deployment">
+      <div class="toc-icon">D</div>
+      <div class="toc-item-text">
+        <div class="num">Section 7</div>
+        <div class="title">Deployment Diagram</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#state">
+      <div class="toc-icon">M</div>
+      <div class="toc-item-text">
+        <div class="num">Section 8</div>
+        <div class="title">State Machine Diagrams</div>
+      </div>
+    </a>
+    <a class="toc-item" href="#github">
+      <div class="toc-icon">G</div>
+      <div class="toc-item-text">
+        <div class="num">Section 9</div>
+        <div class="title">GitHub Repository</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- SECTION 1: CLASS DIAGRAM -->
+<div class="page" id="class">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>Class Diagram</h2>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title">System Class Diagram — Core Domain Model</div>
+    <div class="mermaid">
+classDiagram
+    class User {
+        +int id
+        +string name
+        +string email
+        +string passwordHash
+        +string preferredLanguage
+        +datetime createdAt
+        +register()
+        +login()
+        +updateProfile()
+        +logout()
+    }
+
+    class TouristSite {
+        +int id
+        +string name
+        +string description
+        +string governorate
+        +string category
+        +float latitude
+        +float longitude
+        +string[] imageUrls
+        +string historicalPeriod
+        +getDetails()
+        +getImages()
+        +getRelatedSites()
+    }
+
+    class Governorate {
+        +int id
+        +string name
+        +string arabicName
+        +string region
+        +string description
+        +getSites()
+        +getAttractionCount()
+    }
+
+    class AIQuery {
+        +int id
+        +int userId
+        +string imageUrl
+        +float[] embedding
+        +string generatedDescription
+        +datetime processedAt
+        +float confidenceScore
+        +processImage()
+        +retrieveContext()
+        +generateResponse()
+    }
+
+    class Monument {
+        +int id
+        +int siteId
+        +string name
+        +string hieroglyphicName
+        +string dynasty
+        +string period
+        +string constructionDate
+        +string material
+        +getHistoricalContext()
+        +getTimeline()
+    }
+
+    class Review {
+        +int id
+        +int userId
+        +int siteId
+        +int rating
+        +string comment
+        +datetime createdAt
+        +submit()
+        +edit()
+        +delete()
+    }
+
+    class VectorDatabase {
+        +string collectionName
+        +int dimension
+        +insert(embedding)
+        +search(queryEmbedding, topK)
+        +delete(id)
+        +update(id, embedding)
+    }
+
+    class CLIPEncoder {
+        +string modelName
+        +int embeddingDim
+        +encode(image) float[]
+        +batchEncode(images) float[][]
+        +preprocess(image)
+    }
+
+    class LLMService {
+        +string modelName
+        +int maxTokens
+        +float temperature
+        +generateDescription(context, query)
+        +summarize(text)
+        +translate(text, targetLang)
+    }
+
+    class Itinerary {
+        +int id
+        +int userId
+        +string name
+        +datetime startDate
+        +datetime endDate
+        +TouristSite[] sites
+        +addSite(siteId)
+        +removeSite(siteId)
+        +reorder()
+        +export()
+    }
+
+    User "1" --> "0..*" Review : writes
+    User "1" --> "0..*" Itinerary : creates
+    User "1" --> "0..*" AIQuery : submits
+    TouristSite "1" --> "0..*" Review : receives
+    TouristSite "1" --> "0..*" Monument : contains
+    TouristSite "0..*" --> "1" Governorate : belongsTo
+    AIQuery --> CLIPEncoder : uses
+    AIQuery --> VectorDatabase : queries
+    AIQuery --> LLMService : uses
+    Itinerary "0..*" --> "0..*" TouristSite : includes
+    </div>
+  </div>
+  <div class="note">📌 The CLIPEncoder, VectorDatabase, and LLMService form the core Visual RAG pipeline. AIQuery orchestrates them end-to-end.</div>
+</div>
+
+<!-- SECTION 2: ERD -->
+<div class="page" id="erd">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>Entity Relationship Diagram</h2>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title">Database Schema — ER Diagram</div>
+    <div class="mermaid">
+erDiagram
+    USERS {
+        int id PK
+        string name
+        string email
+        string password_hash
+        string preferred_language
+        datetime created_at
+        datetime updated_at
+    }
+
+    GOVERNORATES {
+        int id PK
+        string name
+        string arabic_name
+        string region
+        string description
+        string cover_image_url
+    }
+
+    TOURIST_SITES {
+        int id PK
+        int governorate_id FK
+        string name
+        string arabic_name
+        text description
+        string category
+        float latitude
+        float longitude
+        string historical_period
+        float avg_rating
+        datetime created_at
+    }
+
+    MONUMENTS {
+        int id PK
+        int site_id FK
+        string name
+        string dynasty
+        string period
+        string construction_date
+        string material
+        text historical_context
+    }
+
+    SITE_IMAGES {
+        int id PK
+        int site_id FK
+        string image_url
+        string caption
+        boolean is_primary
+        datetime uploaded_at
+    }
+
+    AI_QUERIES {
+        int id PK
+        int user_id FK
+        string image_url
+        text generated_description
+        float confidence_score
+        int processing_ms
+        datetime created_at
+    }
+
+    EMBEDDINGS {
+        int id PK
+        int monument_id FK
+        string vector_id
+        string model_version
+        datetime created_at
+    }
+
+    REVIEWS {
+        int id PK
+        int user_id FK
+        int site_id FK
+        int rating
+        text comment
+        datetime created_at
+    }
+
+    ITINERARIES {
+        int id PK
+        int user_id FK
+        string name
+        date start_date
+        date end_date
+        boolean is_public
+    }
+
+    ITINERARY_SITES {
+        int itinerary_id FK
+        int site_id FK
+        int visit_order
+        int duration_minutes
+        string notes
+    }
+
+    USERS ||--o{ REVIEWS : "writes"
+    USERS ||--o{ AI_QUERIES : "submits"
+    USERS ||--o{ ITINERARIES : "creates"
+    GOVERNORATES ||--o{ TOURIST_SITES : "contains"
+    TOURIST_SITES ||--o{ MONUMENTS : "has"
+    TOURIST_SITES ||--o{ SITE_IMAGES : "has"
+    TOURIST_SITES ||--o{ REVIEWS : "receives"
+    MONUMENTS ||--o{ EMBEDDINGS : "has"
+    ITINERARIES ||--o{ ITINERARY_SITES : "includes"
+    TOURIST_SITES ||--o{ ITINERARY_SITES : "appears_in"
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: USE CASE -->
+<div class="page" id="usecase">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>Use Case Diagram</h2>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title">System Use Cases — All Actors</div>
+    <div class="mermaid">
+flowchart LR
+    Tourist(["👤 Tourist\n(Guest)"])
+    RegUser(["👤 Registered\nUser"])
+    Admin(["👤 Admin"])
+    AIEngine(["🤖 AI Engine"])
+
+    subgraph Platform["🏛 Egyptian Tourism Platform"]
+        direction TB
+        UC1["Browse Sites\nby Governorate"]
+        UC2["View Site\nDetails"]
+        UC3["Search Sites"]
+        UC4["Upload Monument\nImage"]
+        UC5["Receive AI\nHistorical Description"]
+        UC6["Register / Login"]
+        UC7["Write Review"]
+        UC8["Create Itinerary"]
+        UC9["Save Favorite\nSites"]
+        UC10["Manage Sites\n& Content"]
+        UC11["Manage Users"]
+        UC12["View Analytics\nDashboard"]
+        UC13["Train / Update\nAI Model"]
+    end
+
+    Tourist --> UC1
+    Tourist --> UC2
+    Tourist --> UC3
+    Tourist --> UC4
+    Tourist --> UC6
+
+    RegUser --> UC1
+    RegUser --> UC2
+    RegUser --> UC3
+    RegUser --> UC4
+    RegUser --> UC7
+    RegUser --> UC8
+    RegUser --> UC9
+
+    UC4 --> UC5
+    UC5 --> AIEngine
+
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+
+    style Platform fill:#eef3f8,stroke:#1a3c5e,stroke-width:2px
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: SEQUENCE DIAGRAMS -->
+<div class="page" id="sequence">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Sequence Diagrams</h2>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">4.1 — Visual RAG: Monument Image Recognition</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Frontend
+    participant APIGateway as API Gateway
+    participant AIService as AI Service
+    participant CLIPEncoder as CLIP Encoder
+    participant VectorDB as Vector DB (FAISS)
+    participant LLM as Language Model
+
+    User->>Frontend: Upload monument image
+    Frontend->>Frontend: Preview & validate image
+    Frontend->>APIGateway: POST /api/ai/analyze {image}
+    APIGateway->>AIService: Forward request
+
+    AIService->>CLIPEncoder: encode(image)
+    CLIPEncoder-->>AIService: Return embedding [512-dim vector]
+
+    AIService->>VectorDB: search(embedding, topK=5)
+    VectorDB-->>AIService: Return top-5 similar monuments
+
+    AIService->>LLM: generate(monuments_context, "Describe this monument")
+    LLM-->>AIService: Return historical description
+
+    AIService->>AIService: Store query + result in DB
+    AIService-->>APIGateway: Return {description, confidence, monuments}
+    APIGateway-->>Frontend: 200 OK {result}
+    Frontend-->>User: Display historical description
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">4.2 — User Registration & Authentication</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Frontend
+    participant API as Backend API (.NET)
+    participant AuthService as Auth Service
+    participant DB as PostgreSQL
+
+    User->>Frontend: Fill registration form
+    Frontend->>Frontend: Client-side validation
+    Frontend->>API: POST /api/auth/register {name, email, password}
+    API->>DB: Check if email exists
+    DB-->>API: Not found
+
+    API->>AuthService: hashPassword(password)
+    AuthService-->>API: passwordHash
+
+    API->>DB: INSERT user record
+    DB-->>API: User created
+
+    API->>AuthService: generateJWT(userId)
+    AuthService-->>API: JWT token
+
+    API-->>Frontend: 201 Created {token, user}
+    Frontend->>Frontend: Store token in localStorage
+    Frontend-->>User: Redirect to dashboard
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: ACTIVITY DIAGRAMS -->
+<div class="page" id="activity">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>Activity Diagrams</h2>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">5.1 — AI Image Analysis Pipeline</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart TD
+    A([▶ Start]) --> B[User selects image]
+    B --> C{Valid format?\nJPG/PNG/WEBP}
+    C -- No --> D[Show format error]
+    D --> B
+    C -- Yes --> E{File size\n< 10MB?}
+    E -- No --> F[Show size error]
+    F --> B
+    E -- Yes --> G[Upload to cloud storage]
+    G --> H[Send to AI Service]
+    H --> I[CLIP: Encode image\nto 512-dim vector]
+    I --> J[FAISS: Search\ntop-5 similar embeddings]
+    J --> K{Confidence\n> 0.6?}
+    K -- No --> L[Return generic\nEgypt description]
+    K -- Yes --> M[Retrieve monument\nhistorical texts]
+    M --> N[LLM generates\nrich description]
+    N --> O[Save query to DB]
+    O --> P[Return result to user]
+    L --> P
+    P --> Q([⏹ End])
+
+    style A fill:#1a3c5e,color:#fff
+    style Q fill:#1a3c5e,color:#fff
+    style K fill:#fff8e6,stroke:#c8a850
+    style C fill:#fff8e6,stroke:#c8a850
+    style E fill:#fff8e6,stroke:#c8a850
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">5.2 — Itinerary Planning Activity</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+flowchart TD
+    A([▶ Start]) --> B[User opens\nItinerary Builder]
+    B --> C[Select governorate\nor region]
+    C --> D[Browse available sites]
+    D --> E{Add site\nto itinerary?}
+    E -- Yes --> F[Set visit date & duration]
+    F --> G[Add to itinerary list]
+    G --> H{Add another\nsite?}
+    H -- Yes --> D
+    H -- No --> I[Review itinerary]
+    E -- No --> D
+    I --> J{Reorder\nsites?}
+    J -- Yes --> K[Drag & drop reorder]
+    K --> I
+    J -- No --> L[Name itinerary]
+    L --> M{Save as\npublic?}
+    M -- Public --> N[Save & publish]
+    M -- Private --> O[Save privately]
+    N --> P[Share link generated]
+    O --> Q([⏹ End])
+    P --> Q
+
+    style A fill:#1a3c5e,color:#fff
+    style Q fill:#1a3c5e,color:#fff
+    style E fill:#fff8e6,stroke:#c8a850
+    style H fill:#fff8e6,stroke:#c8a850
+    style J fill:#fff8e6,stroke:#c8a850
+    style M fill:#fff8e6,stroke:#c8a850
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: COMPONENT DIAGRAM -->
+<div class="page" id="component">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>Component Diagram</h2>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title">System Component Architecture</div>
+    <div class="mermaid">
+flowchart TB
+    subgraph Client["🖥 Client Layer"]
+        ReactApp["⚛ React Frontend\n(Web App)"]
+    end
+
+    subgraph Gateway["🔀 API Gateway"]
+        GW["FastAPI Gateway\n(Auth · Rate Limit · Routing)"]
+    end
+
+    subgraph Backend["⚙ Backend Services"]
+        direction LR
+        SiteAPI["Site & Governorate\nAPI (.NET)"]
+        UserAPI["User & Auth\nAPI (.NET)"]
+        AIService["AI Analysis\nService (Python)"]
+        SearchService["Search\nService"]
+    end
+
+    subgraph AICore["🧠 AI Core (Python / PyTorch)"]
+        direction LR
+        CLIP["CLIP\nEncoder"]
+        FAISS["FAISS\nVector DB"]
+        LLM["LLM\n(GPT / Local)"]
+    end
+
+    subgraph DataLayer["🗄 Data Layer"]
+        direction LR
+        Postgres["PostgreSQL\n(Sites · Users · Reviews)"]
+        Redis["Redis\n(Cache · Sessions)"]
+        S3["AWS S3\n(Images · Files)"]
+    end
+
+    ReactApp -->|HTTPS / REST| GW
+    GW --> SiteAPI
+    GW --> UserAPI
+    GW --> AIService
+    GW --> SearchService
+    AIService --> CLIP
+    CLIP --> FAISS
+    FAISS --> LLM
+    SiteAPI --> Postgres
+    UserAPI --> Postgres
+    UserAPI --> Redis
+    AIService --> S3
+    SearchService --> Postgres
+
+    style Client fill:#e8f0fe,stroke:#1a3c5e
+    style Gateway fill:#fff8e6,stroke:#c8a850
+    style Backend fill:#e8f5e9,stroke:#2e7d32
+    style AICore fill:#fce4ec,stroke:#c62828
+    style DataLayer fill:#f3e5f5,stroke:#6a1b9a
+      </div>
+  </div>
+</div>
+
+<!-- SECTION 7: DEPLOYMENT DIAGRAM -->
+<div class="page" id="deployment">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>Deployment Diagram</h2>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title">Cloud Deployment Architecture — AWS / Render</div>
+    <div class="mermaid">
+flowchart TB
+    User(["👤 End User\n(Browser / Mobile)"])
+
+    subgraph CDN["🌐 CDN Layer (CloudFront)"]
+        CF["Static Assets\n& React Build"]
+    end
+
+    subgraph AWS["☁ AWS Cloud"]
+        direction TB
+        subgraph LBTier["Load Balancer"]
+            ALB["Application\nLoad Balancer"]
+        end
+
+        subgraph AppTier["Application Tier (ECS / Docker)"]
+            direction LR
+            C1["🐳 .NET API\nContainer"]
+            C2["🐳 FastAPI\nContainer"]
+            C3["🐳 AI Service\nContainer (GPU)"]
+        end
+
+        subgraph DataTier["Data Tier"]
+            direction LR
+            RDS["🐘 RDS\nPostgreSQL"]
+            ElastiCache["⚡ ElastiCache\nRedis"]
+            S3["🪣 S3 Bucket\n(Images)"]
+        end
+
+        subgraph AISupportTier["AI Support"]
+            FAISS_SVC["FAISS Vector\nService"]
+            ModelStore["S3 Model\nRegistry"]
+        end
+    end
+
+    User -->|HTTPS| CF
+    CF -->|API calls| ALB
+    ALB --> C1
+    ALB --> C2
+    ALB --> C3
+    C1 --> RDS
+    C1 --> ElastiCache
+    C2 --> RDS
+    C3 --> FAISS_SVC
+    C3 --> S3
+    C3 --> ModelStore
+
+    style AWS fill:#fff8e6,stroke:#c8a850,stroke-width:2px
+    style CDN fill:#e8f0fe,stroke:#1a3c5e
+    style AppTier fill:#e8f5e9,stroke:#2e7d32
+    style DataTier fill:#f3e5f5,stroke:#6a1b9a
+    style AISupportTier fill:#fce4ec,stroke:#c62828
+      </div>
+  </div>
+</div>
+
+<!-- SECTION 8: STATE MACHINE DIAGRAMS -->
+<div class="page" id="state">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>State Machine Diagrams</h2>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">8.1 — AI Query Processing States</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+stateDiagram-v2
+    [*] --> Idle : System ready
+
+    Idle --> Uploading : User submits image
+    Uploading --> Validating : Image received
+    Validating --> Encoding : Validation passed
+    Validating --> Failed : Invalid format/size
+
+    Encoding --> Retrieving : CLIP encoding complete
+    Retrieving --> Generating : Top-K results found
+    Retrieving --> LowConfidence : Confidence < 0.6
+
+    Generating --> Completed : Description generated
+    LowConfidence --> FallbackResponse : Use generic description
+    FallbackResponse --> Completed : Fallback ready
+
+    Completed --> Saving : Save to DB
+    Saving --> Idle : Saved successfully
+
+    Failed --> Idle : Error returned to user
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-title">8.2 — User Session State</div>
+    <div class="diagram-box">
+      <div class="mermaid">
+stateDiagram-v2
+    [*] --> Guest : First visit
+
+    Guest --> Registering : Click register
+    Guest --> LoggingIn : Click login
+
+    Registering --> Verified : Email verified
+    Registering --> Guest : Cancel registration
+
+    LoggingIn --> Authenticated : Valid credentials
+    LoggingIn --> Guest : Invalid credentials
+
+    Authenticated --> BrowsingSites : Browse platform
+    Authenticated --> UploadingImage : Use AI feature
+    Authenticated --> ManagingItinerary : Plan trip
+    Authenticated --> WritingReview : Leave review
+    Authenticated --> LoggedOut : Click logout
+
+    BrowsingSites --> Authenticated : Return
+    UploadingImage --> Authenticated : Return
+    ManagingItinerary --> Authenticated : Return
+    WritingReview --> Authenticated : Return
+
+    Verified --> LoggingIn : Auto-redirect
+    LoggedOut --> Guest : Session cleared
+    LoggedOut --> [*]
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9: GITHUB REPOSITORY -->
+<div class="page" id="github">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>GitHub Repository</h2>
+  </div>
+
+  <div class="github-card">
+    <div class="gh-header">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="#e6edf3"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <div>
+        <div class="gh-title">egyptian-tourism-ai / platform</div>
+        <div class="gh-subtitle">AI-Powered Egyptian Tourism Platform — Graduation Project 2025/2026</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <span class="gh-badge green">🟢 Active</span>
+      <span class="gh-badge blue">Python</span>
+      <span class="gh-badge blue">React</span>
+      <span class="gh-badge blue">C# .NET</span>
+      <span class="gh-badge">MIT License</span>
+    </div>
+
+    <div style="font-size:13px; color:#8b949e; margin-bottom:20px; font-family:'Segoe UI',sans-serif;">
+      📁 Repository Structure
+    </div>
+
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">frontend/</span>
+      <span class="msg">React application — UI/UX Website</span>
+      <span class="date">main</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">📁</span>
+      <span class="fname">frontend/src/components/</span>
+      <span class="msg">Reusable React components</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">📁</span>
+      <span class="fname">frontend/src/pages/</span>
+      <span class="msg">Site pages: Home, Explorer, AI Tool, Itinerary</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">backend/</span>
+      <span class="msg">.NET API — REST endpoints</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">📁</span>
+      <span class="fname">backend/Controllers/</span>
+      <span class="msg">SiteController, UserController, ReviewController</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">📁</span>
+      <span class="fname">backend/Models/</span>
+      <span class="msg">Entity models</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">ai-service/</span>
+      <span class="msg">Python AI pipeline — FastAPI + RAG</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">🐍</span>
+      <span class="fname">ai-service/clip_encoder.py</span>
+      <span class="msg">CLIP image embedding</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">🐍</span>
+      <span class="fname">ai-service/vector_search.py</span>
+      <span class="msg">FAISS similarity search</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">🐍</span>
+      <span class="fname">ai-service/llm_generator.py</span>
+      <span class="msg">LLM description generation</span>
+    </div>
+    <div class="gh-file" style="padding-left:20px">
+      <span class="icon">🐍</span>
+      <span class="fname">ai-service/rag_pipeline.py</span>
+      <span class="msg">Orchestrate full RAG flow</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">data/</span>
+      <span class="msg">Tourism dataset — monuments, sites, images</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">ml-training/</span>
+      <span class="msg">Model fine-tuning notebooks (Google Colab)</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">deployment/</span>
+      <span class="msg">Docker + AWS config files</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📁</span>
+      <span class="fname">docs/</span>
+      <span class="msg">API docs, UML diagrams, design specs</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📄</span>
+      <span class="fname">docker-compose.yml</span>
+      <span class="msg">Local development environment</span>
+    </div>
+    <div class="gh-file">
+      <span class="icon">📄</span>
+      <span class="fname">README.md</span>
+      <span class="msg">Project overview, setup instructions</span>
+    </div>
+
+    <div class="terminal">
+      <div><span class="comment"># Clone the repository</span></div>
+      <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/egyptian-tourism-ai/platform.git</span></div>
+      <div><span class="prompt">$</span> <span class="cmd">cd platform</span></div>
+      <div></div>
+      <div><span class="comment"># Start all services with Docker Compose</span></div>
+      <div><span class="prompt">$</span> <span class="cmd">docker-compose up --build</span></div>
+      <div></div>
+      <div><span class="comment"># Run AI service independently</span></div>
+      <div><span class="prompt">$</span> <span class="cmd">cd ai-service && pip install -r requirements.txt</span></div>
+      <div><span class="prompt">$</span> <span class="cmd">uvicorn main:app --reload --port 8001</span></div>
+    </div>
+
+    <div style="margin-top:20px; font-family:'Segoe UI',sans-serif;">
+      <div style="font-size:13px; color:#8b949e; margin-bottom:10px">Branch strategy</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <span class="gh-badge blue">main — production</span>
+        <span class="gh-badge">develop — integration</span>
+        <span class="gh-badge">feature/ai-pipeline</span>
+        <span class="gh-badge">feature/frontend-ui</span>
+        <span class="gh-badge">feature/backend-api</span>
+        <span class="gh-badge">feature/data-collection</span>
+        <span class="gh-badge">hotfix/</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'default',
+  themeVariables: {
+    primaryColor: '#1a3c5e',
+    primaryTextColor: '#ffffff',
+    primaryBorderColor: '#c8a850',
+    lineColor: '#555',
+    secondaryColor: '#eef3f8',
+    tertiaryColor: '#fff8e6',
+    fontSize: '14px',
+    fontFamily: 'Segoe UI, Arial, sans-serif'
+  },
+  flowchart: { curve: 'basis', padding: 20 },
+  sequence: { diagramMarginX: 20, diagramMarginY: 10 },
+  er: { diagramPadding: 20, fontSize: 13 },
+  classDiagram: { diagramPadding: 20 }
+});
+</script>
+</body>
+</html>

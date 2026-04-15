@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Explore Places - Discovering Egypt</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+        <link rel="stylesheet" href="css/explore-places.css">
+</head>
+<body class="light">
+
+    <nav class="nav-desktop glass hidden-mobile">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="material-symbols-rounded icon">pyramid</span>
+                <span>Discover <span class="text-gradient">Egypt</span></span>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-item"><span class="material-symbols-rounded">home</span> Home</a>
+                <a href="#" class="nav-item active"><span class="material-symbols-rounded">location_city</span> Places</a>
+                <a href="#" class="nav-item"><span class="material-symbols-rounded">hotel</span> Hotels</a>
+                <a href="#" class="nav-item"><span class="material-symbols-rounded">map</span> Planner</a>
+            </div>
+            <div class="hidden-mobile" style="align-items: center; gap: 16px;">
+                <button id="theme-toggle-desktop" class="nav-item"><span class="material-symbols-rounded">dark_mode</span></button>
+                <button class="btn-scan">
+                    <span class="material-symbols-rounded">qr_code_scanner</span> AI Scanner
+                </button>
+                <div class="profile-ring">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRQPx7oM4EzIYNUI1nf5vt8EqH4FwfATdITqYRe_2JwSAGMOwYvWLmzMDY87s_rnQAtsAWk6vYeg6591zZP71z_dQRvutX1oJ98faEHZvzEwCCOXhCQ3omQZJVUzvA_dVHz5HSodvry2ruoKDb0Q7QRltv4VuK7nasigWULqAfyF0y2byERostRIUR7H2neT5LDxYWe1EGNN-wpLxEVHx4kiIEfoSjD5gjLtvWEUE5F4wUcwJ4aLykKwDqSWA5R0Zk7TZLEFSokdw0" class="profile-img" alt="User">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-header glass hidden-desktop">
+        <div class="brand" style="font-size: 1rem;">
+            <span class="material-symbols-rounded icon" style="font-size: 24px;">pyramid</span>
+            <span>Discover Egypt</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <button id="theme-toggle-mobile"><span class="material-symbols-rounded" style="color: var(--text-muted)">dark_mode</span></button>
+            <div class="profile-ring" style="width: 32px; height: 32px;">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRQPx7oM4EzIYNUI1nf5vt8EqH4FwfATdITqYRe_2JwSAGMOwYvWLmzMDY87s_rnQAtsAWk6vYeg6591zZP71z_dQRvutX1oJ98faEHZvzEwCCOXhCQ3omQZJVUzvA_dVHz5HSodvry2ruoKDb0Q7QRltv4VuK7nasigWULqAfyF0y2byERostRIUR7H2neT5LDxYWe1EGNN-wpLxEVHx4kiIEfoSjD5gjLtvWEUE5F4wUcwJ4aLykKwDqSWA5R0Zk7TZLEFSokdw0" class="profile-img" alt="User">
+            </div>
+        </div>
+    </div>
+
+    <main class="main-container">
+        
+        <div class="page-header">
+            <div class="header-text">
+                <h1>Explore <span class="text-gradient">Egypt's</span> Treasures</h1>
+                <p>Discover ancient wonders, breathtaking landscapes, and cultural gems across the land of the pharaohs.</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box"><div class="num">248+</div><div class="lbl">Places</div></div>
+                <div class="stat-box"><div class="num">12k+</div><div class="lbl">Reviews</div></div>
+                <div class="stat-box"><div class="num">4.8</div><div class="lbl">Rating</div></div>
+            </div>
+        </div>
+
+        <div class="content-layout">
+            
+            <aside class="sidebar">
+                <div class="filter-header">
+                    <h2><span class="material-symbols-rounded" style="color: var(--primary)">tune</span> Filters</h2>
+                    <span class="btn-reset">Reset All</span>
+                </div>
+
+                <div class="filter-card">
+                    <div class="filter-title">Category</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="custom-checkbox" checked>
+                            Historical Monuments
+                            <span class="count">(128)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="custom-checkbox">
+                            Museums & Culture
+                            <span class="count">(45)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="custom-checkbox">
+                            Beaches & Resorts
+                            <span class="count">(32)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="custom-checkbox">
+                            Nature & Desert
+                            <span class="count">(24)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <div class="filter-title">Budget ($ USD)</div>
+                    <input type="range" class="custom-range" min="0" max="500" value="150">
+                    <div class="range-labels">
+                        <span>$0</span>
+                        <span class="active">$150+</span>
+                        <span>$500</span>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <div class="filter-title">Location</div>
+                    <div class="custom-select-wrap">
+                        <span class="material-symbols-rounded icon-left">place</span>
+                        <select class="custom-select">
+                            <option>All Governorates</option>
+                            <option>Cairo</option>
+                            <option>Giza</option>
+                            <option>Luxor</option>
+                            <option>Aswan</option>
+                        </select>
+                        <span class="material-symbols-rounded icon-right">expand_more</span>
+                    </div>
+                    
+                    <label class="toggle-wrap">
+                        <span class="toggle-label">Nearby only</span>
+                        <input type="checkbox" class="custom-toggle">
+                    </label>
+                </div>
+            </aside>
+
+            <div class="content-area">
+                
+                <div class="controls-bar">
+                    <div class="search-input-wrap">
+                        <span class="material-symbols-rounded icon">search</span>
+                        <input type="text" class="search-input" placeholder="Search temples, museums...">
+                    </div>
+                    <div class="sort-wrap">
+                        <span>Sort by:</span>
+                        <select class="custom-select" style="padding-left: 12px; font-weight: 500;">
+                            <option>Most Visited</option>
+                            <option>Highest Rated</option>
+                            <option>Price: Low to High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    
+                    <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHqEVgAx1EKPIBWbsjrmTdyNULpnNdq9iL-f2_RN6z99dfmBh2Dn7oZA7DFjz8K5ctT6WqIcu2aGt5OM8vGRwA-hJwtyYFRVHCerwtDQ6X6XPWR9kLosxlrZsQBm2K5ziNFTvUR-QZqK8DIe33Qc6UzbyrcA6y7xtM0yznB7Udcb7zhrbu86w-W_7L4vq-UcL-Cmi9BGaHB6lollmY7rI9MHyPTf4xRw4UmMBNMY-q6pXaqmh1DGoGrQLT_UxCiSNGLxc5jVz7VNa_" alt="Pyramids">
+                            <div class="img-overlay"></div>
+                            <button class="btn-fav"><span class="material-symbols-rounded">favorite_border</span></button>
+                            <div class="badge-price">$20 / person</div>
+                            <div class="badge-rating"><span class="material-symbols-rounded">star</span> 4.9</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title-row">
+                                <h3 class="card-title">Pyramids of Giza</h3>
+                                <span class="card-reviews">2.4k reviews</span>
+                            </div>
+                            <div class="card-loc"><span class="material-symbols-rounded">location_on</span> Giza, Egypt</div>
+                            <div class="tags-row">
+                                <span class="tag blue">Ancient</span>
+                                <span class="tag amber">UNESCO</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="pill monument">Monument</span>
+                                <button class="btn-view">View Details <span class="material-symbols-rounded">arrow_forward</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy4TSTo97JzUl5feiYtKPHe1gHrERrTtn0gpipg-LowsGVlqag-Vb0ea6-wacUl0bXyHyPWQMKa9SOB6_jHoTNOurRTqd_biMQ_Cjgud8SbyvfOUr35kyleCzOjIwa4VoWmfWSnXUXpT3HN229qdBFgdeQMNeNfjzZFuCSgWzrq--rixmZIeazBUtgSqPFdHZr14kN5DCKfpnzL_-ePauDAbw_6J8pEOTxQmkhyyBnYnGf-Jdkkp1z14HHu9CZ7NRfuuNr_mfcvOaD" alt="Karnak">
+                            <div class="img-overlay"></div>
+                            <button class="btn-fav"><span class="material-symbols-rounded">favorite_border</span></button>
+                            <div class="badge-price">$15 / person</div>
+                            <div class="badge-rating"><span class="material-symbols-rounded">star</span> 4.8</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title-row">
+                                <h3 class="card-title">Karnak Temple</h3>
+                                <span class="card-reviews">1.8k reviews</span>
+                            </div>
+                            <div class="card-loc"><span class="material-symbols-rounded">location_on</span> Luxor, Egypt</div>
+                            <div class="tags-row">
+                                <span class="tag amber">Temple</span>
+                                <span class="tag purple">Ancient</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="pill historical">Historical</span>
+                                <button class="btn-view">View Details <span class="material-symbols-rounded">arrow_forward</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnOdvDqD3op6J0cBJQryBsZSzHqAE5HfGcJi5RgK1TJoK9Wg6KGYxBILPNTGGeUTOX2mfEa-sR89dYfBXgtaGa3hGl72-N_ygnVuWHuclqsfGxBSoL4FcHC_ub3hFb9slgjHyVYK3VaxxLvRVeo3iJ6ucBJxiuKGRr-VKVIcaCH53Zen7_9sLv_dLYJRREH1g-3X7XMH1Yn0_7SgYwKh5YucL7Gw1JzDPkyKftT9uTnxn08XVIhDU9xijf-CKMhrieLlyVeyT9xu4q" alt="Abu Simbel">
+                            <div class="img-overlay"></div>
+                            <button class="btn-fav"><span class="material-symbols-rounded">favorite_border</span></button>
+                            <div class="badge-price">$25 / person</div>
+                            <div class="badge-rating"><span class="material-symbols-rounded">star</span> 4.9</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title-row">
+                                <h3 class="card-title">Abu Simbel</h3>
+                                <span class="card-reviews">3.1k reviews</span>
+                            </div>
+                            <div class="card-loc"><span class="material-symbols-rounded">location_on</span> Aswan, Egypt</div>
+                            <div class="tags-row">
+                                <span class="tag purple">UNESCO</span>
+                                <span class="tag red">Temple</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="pill unesco">UNESCO Site</span>
+                                <button class="btn-view">View Details <span class="material-symbols-rounded">arrow_forward</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-img-wrap">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAIeYQa2_h6aCuro3p3z2EqKJyRUg_6OWVeyY2qRl0fGl3Ff4_C8cro2HAX7I8w_6hQ-hkGUc9aGWT90UunPLGIR8cuiCsbGyHS3ebDslreFZe26c29f5xicNyWoFhPkOwGIzLcIphFPKWk85ymvt2saRm9tXxbh47MSNiRGVvToGTq7j_QEqilSxJFpzQ6LBNjKxhLDTx6KHe7wnH9qIBJDghvid5k34SoSzSu4nCpT5qo7SuEoGWz53-kJ_7QDGzLarTw13bPygM" alt="Blue Hole">
+                            <div class="img-overlay"></div>
+                            <button class="btn-fav"><span class="material-symbols-rounded">favorite_border</span></button>
+                            <div class="badge-price free">Free Entry</div>
+                            <div class="badge-rating"><span class="material-symbols-rounded">star</span> 4.7</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title-row">
+                                <h3 class="card-title">Blue Hole</h3>
+                                <span class="card-reviews">980 reviews</span>
+                            </div>
+                            <div class="card-loc"><span class="material-symbols-rounded">location_on</span> Dahab, Egypt</div>
+                            <div class="tags-row">
+                                <span class="tag teal">Diving</span>
+                                <span class="tag blue">Beach</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="pill diving">Diving & Beach</span>
+                                <button class="btn-view">View Details <span class="material-symbols-rounded">arrow_forward</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="load-more">
+                    <button class="btn-load">
+                        Load More Places
+                        <span class="material-symbols-rounded">expand_more</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <nav class="mobile-nav glass hidden-desktop">
+        <a href="#" class="nav-icon"><span class="material-symbols-rounded">home</span> Home</a>
+        <a href="#" class="nav-icon active"><span class="material-symbols-rounded">location_city</span> Places</a>
+        <button class="fab-scan"><span class="material-symbols-rounded">qr_code_scanner</span></button>
+        <a href="#" class="nav-icon"><span class="material-symbols-rounded">map</span> Planner</a>
+        <a href="#" class="nav-icon"><span class="material-symbols-rounded">person</span> Profile</a>
+    </nav>
+
+    <footer class="footer-desktop hidden-mobile">
+        <div class="brand" style="justify-content: center; margin-bottom: 16px;">
+            <span class="material-symbols-rounded icon" style="font-size: 24px;">pyramid</span>
+            <span>Discovering Egypt</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.875rem;">© 2024 Platform. Powered by .NET & AI.</p>
+    </footer>
+
+    <button class="fab-ai">
+        <span class="material-symbols-rounded" style="font-size: 28px;">smart_toy</span>
+    </button>
+
+    
+    <script src="js/explore-places.js"></script>
+</body>
+</html>
