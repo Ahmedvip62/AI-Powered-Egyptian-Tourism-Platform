@@ -1,0 +1,68 @@
+{
+  "Hit@1": 0.0,
+  "Hit@3": 0.0,
+  "MRR@10": 0.0,
+  "n": 10,
+  "details": [
+    {
+      "site": "Great Pyramid",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Great Sphinx",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Karnak",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Valley of Kings",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Abu Simbel",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Philae Temple",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Colossi of Memnon",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Bibliotheca Alexandrina",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Kom Ombo",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    },
+    {
+      "site": "Temple of Edfu",
+      "hit1": 0,
+      "hit3": 0,
+      "rr": 0.0
+    }
+  ]
+}
